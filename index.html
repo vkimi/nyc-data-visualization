@@ -14,9 +14,19 @@
             <div id="nyc-crime"></div>
         </div>
 
+        <!-- import DataFrame for wrangling -->
+        <!-- ! CONSIDER USING VEGA TRANSFORM INSTEAD -->
+        <script src="https://gmousse.github.io/dataframe-js/dist/dataframe.min.js"></script>
         <!-- import Vega for creating visulization -->
         <script src="https://cdn.jsdelivr.net/npm/vega@5.3.0"></script>
-        <!-- test vega bar graph (copy of assignment 4 first graph - Justin) -->
-        <script src="./js/nyc-crime.js"></script>
+
+        <!-- ! DEVELOPMENT ONLY -->
+        <!-- ! CONSIDER CHANGING TO FETCH WHEN SERVED OVER HTTP -->
+        <!-- embed spec files for Vega visualization(s) -->
+        <script src="./js/spec/nyc-crime-vega-spec.js"></script>
+
+        <!-- final visualization files -->
+        <script src="./js/functions.js"></script>
+        <script src="./js/main.js"></script>
     </body>
 </html>
