@@ -12,7 +12,9 @@ const nyc_county = {
             "transform": [
                 {
                     "type": "filter",
-                    "expr": "datum.year == 2017 && datum.population != null"
+                    // ! DEVELOPMENT ONLY
+                    // * only look at 2017 data to reduce load time
+                    "expr": "datum.Year == 2017"
                 }
             ]
         },
@@ -28,9 +30,9 @@ const nyc_county = {
                     "type": "lookup",
                     "from": "nyc-crime-index",
                     "key": "County",
-                    "fields": ["NAME"],
+                    "fields": ["properties.NAME"],
                     "as": ["population"],
-                    "values": ["population"]
+                    "values": ["Population"] // ! DEVELOPMENT ONLY
                 }
             ]
         }
@@ -50,12 +52,17 @@ const nyc_county = {
             "style": ["geoshape"],
             "from": {"data": "nyc-county"},
             "encode": {
+                "enter": {
+                        "tooltip": {
+                            // "signal": "datum.properties.NAME"
+                            "signal": "\'Population: \' + datum.population"
+                    }
+                },
                 "update": {
                     "strokeWidth": {"value": 0.5},
                     "stroke": {"value": "#bbbbbb"},
                     "fill": {"value": "#eeeeee"},
                     "zindex": {"value": 0}
-                    // todo: find how to access the population variable attached in transform
                 },
                 "hover": {
                     "strokeWidth": {"value": 1},
