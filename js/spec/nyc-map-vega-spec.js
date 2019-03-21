@@ -6,6 +6,17 @@ const nyc_county = {
     "signals": [],
     "data": [
         {
+            "name": "nyc-crime-index",
+            "url": "https://gist.githubusercontent.com/justinhodev/349f8d1f62c7568b65124e3e5065c905/raw/bb726161d66c3537e3e1e5f3e5775c3a5a4fbb43/nyc-crime-index.csv",
+            "format": {"type": "csv", "parse": "auto"},
+            "transform": [
+                {
+                    "type": "filter",
+                    "expr": "datum.year == 2017 && datum.population != null"
+                }
+            ]
+        },
+        {
             "name": "nyc-county",
             "url": "https://raw.githubusercontent.com/deldersveld/topojson/master/countries/us-states/NY-36-new-york-counties.json",
             "format": {
@@ -14,8 +25,12 @@ const nyc_county = {
             },
             "transform": [
                 {
-                  "type": "geopath",
-                  "projection": "projection"
+                    "type": "lookup",
+                    "from": "nyc-crime-index",
+                    "key": "County",
+                    "fields": ["NAME"],
+                    "as": ["population"],
+                    "values": ["population"]
                 }
             ]
         }
@@ -31,17 +46,26 @@ const nyc_county = {
     ],
     "marks": [
         {
-            "type": "path",
+            "type": "shape",
+            "style": ["geoshape"],
             "from": {"data": "nyc-county"},
             "encode": {
-                "enter": {
-                    "fill": {"value": "#dedede"},
-                    "stroke": {"value": "white"}
-                },
                 "update": {
-                    "path": {"field": "path"}
+                    "strokeWidth": {"value": 0.5},
+                    "stroke": {"value": "#bbbbbb"},
+                    "fill": {"value": "#eeeeee"},
+                    "zindex": {"value": 0}
+                    // todo: find how to access the population variable attached in transform
+                },
+                "hover": {
+                    "strokeWidth": {"value": 1},
+                    "stroke": {"value": "#999999"},
+                    "zindex": {"value": 1}
                 }
-            }
+            },
+            "transform": [
+                { "type": "geoshape", "projection": "projection"}
+            ]
         }
     ]
 }
