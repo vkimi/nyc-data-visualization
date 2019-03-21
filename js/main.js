@@ -23,4 +23,12 @@ function crime_bar_graph() {
     });
 }
 
-var view = render('#nyc-map', nyc_county).runAsync();
+var view = render('#nyc-map', nyc_county).runAsync()
+// ! FOR DEVELOPMENT ONLY
+// ! DEBUGGING LOG DATA STREAM
+.then(
+    view => {
+        console.log(view.data('nyc-county'))
+        console.log(view.data('nyc-crime-index'))
+    }
+);
