@@ -6,12 +6,14 @@
  * TODO: set default container, catch exception
  */
 function render(div, spec) {
+    var tooltip = new vegaTooltip.Handler();
+
     var view = new vega.View(vega.parse(spec), {
         logLevel: vega.Warn,
         renderer: 'canvas',
         container: div,
         hover: true
-    });
+    }).tooltip(tooltip.call);
     
     return view;
 }
