@@ -41,7 +41,7 @@ const nyc_county = {
             "name": "color",
             "type": "linear",
             "range": {"scheme": "teals"},
-            "domain": {"data": "nyc-county", "field": "info[\'Index Count\']"},
+            "domain": {"data": "nyc-county", "field": "info[Index Count]"},
             "zero": false,
             "nice": true
         }
