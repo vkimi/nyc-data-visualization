@@ -1,6 +1,6 @@
 const nyc_county = {
     "$schema": "https://vega.github.io/schema/vega/v5.json",
-    "width": 900,
+    "width": 800,
     "height": 560,
     "autosize": "none",
     "signals": [],
@@ -20,7 +20,7 @@ const nyc_county = {
         },
         {
             "name": "nyc-county",
-            "url": "https://raw.githubusercontent.com/deldersveld/topojson/master/countries/us-states/NY-36-new-york-counties.json",
+            "url": "https://gist.githubusercontent.com/justinhodev/99035dd734b7ed2c989531018c124365/raw/b2bfc8a3fb77c9b28e85c41c8607954da41d4a28/nyc-county-map.json",
             "format": {
                 "type": "topojson",
                 "feature": "cb_2015_new_york_county_20m"
@@ -31,13 +31,21 @@ const nyc_county = {
                     "from": "nyc-crime-index",
                     "key": "County",
                     "fields": ["properties.NAME"],
-                    "as": ["population"],
-                    "values": ["Population"] // ! DEVELOPMENT ONLY
+                    "as": ["info"]
                 }
             ]
         }
     ],
-    "scales": [],
+    "scales": [
+        {
+            "name": "color",
+            "type": "linear",
+            "range": {"scheme": "teals"},
+            "domain": {"data": "nyc-county", "field": "info[\'Index Count\']"},
+            "zero": false,
+            "nice": true
+        }
+    ],
     "projections": [
         {
             "name": "projection",
@@ -46,23 +54,27 @@ const nyc_county = {
             "center": [-75, 43]
         }
     ],
+    "legends": [
+        {
+            "fill": "color",
+            "orient": "top-right",
+            "title": "Total Crime"
+        }
+    ],
     "marks": [
         {
             "type": "shape",
             "style": ["geoshape"],
             "from": {"data": "nyc-county"},
             "encode": {
-                "enter": {
-                        "tooltip": {
-                            // "signal": "datum.properties.NAME"
-                            "signal": "\'Population: \' + datum.population"
-                    }
-                },
                 "update": {
                     "strokeWidth": {"value": 0.5},
                     "stroke": {"value": "#bbbbbb"},
-                    "fill": {"value": "#eeeeee"},
-                    "zindex": {"value": 0}
+                    "fill": {"scale": "color", "field": "info[\"Index Count\"]"},
+                    "zindex": {"value": 0},
+                    "tooltip": { 
+                        "signal": "{title: datum.info.County, 'Total Crime Count': datum.info[\"Index Count\"], 'Property Crimes': datum.info[\"Property Count\"], 'Violent Crimes': datum.info[\"Violent Count\"], 'Firearm Crimes': datum.info[\"Firearm Count\"]}"
+                    }
                 },
                 "hover": {
                     "strokeWidth": {"value": 1},
