@@ -29,18 +29,7 @@ DataFrame.fromCSV('https://gist.githubusercontent.com/justinhodev/bbe43324cbf228
         // convert to JSON object
         factors = factors.toCollection();
         // setup visualization
-        var view = render('#nyc-pie', nyc_category);
-
-        var asianTotal= 0; //create a new array that looks like my values on the left side
-                            // how do I bring this value over?
-        for (i = 0; i < factors.length-1; i++) { 
-            if(typeof parseFloat(factors[i]['Asian']) == 'number'){ 
-                asianTotal += parseFloat(factors[i]['Asian']);
-            }else{
-                console.log(factors[i]['Asian'] + " is not a number <br/>");
-            }
-        }
-
+        var view = render('#nyc-bar', nyc_category);
 
         // insert wrangled dataset at runtime
        view.change('nyc-pie-data', vega.changeset().insert(factors));
