@@ -12,8 +12,6 @@ const nyc_county = {
             "transform": [
                 {
                     "type": "filter",
-                    // ! DEVELOPMENT ONLY
-                    // * only look at 2017 data to reduce load time
                     "expr": "datum.Year == 2017"
                 }
             ]
@@ -40,7 +38,7 @@ const nyc_county = {
         {
             "name": "color",
             "type": "linear",
-            "range": {"scheme": "teals"},
+            "range": {"scheme": "blues"},
             "domain": {"data": "nyc-county", "field": "info[Index Count]"},
             "zero": false,
             "nice": true
