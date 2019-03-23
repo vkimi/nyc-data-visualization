@@ -1,2 +1,5 @@
-vegaEmbed('#vis', nyc_ses_lite);
-vegaEmbed('#map', nyc_county)
+vegaEmbed('#vis', nyc).then(
+    result => {
+        console.log(result.view);
+    }
+).catch(err => console.log(err));
